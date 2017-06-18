@@ -1,16 +1,18 @@
+package versilo;
+
 public class MessageReceiver implements Runnable {
 
     private String host;
     private int port;
-    private int lastMessageId = 0;
 
-    public MessageReceiver(String newHost, int newPort) {
+    MessageReceiver(String newHost, int newPort) {
         host = newHost;
         port = newPort;
     }
 
     public void run() {
         HttpHandler httpHandler = new HttpHandler(host, port);
+        int lastMessageId = 0;
 
         while (true) {
 

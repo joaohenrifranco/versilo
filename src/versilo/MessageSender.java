@@ -1,6 +1,8 @@
 // This class runs as a thread reading what is typed from the keyboard and
 // sending it as a post http request after every new line.
 
+package versilo;
+
 import java.util.Scanner;
 
 public class MessageSender implements Runnable {
@@ -8,7 +10,7 @@ public class MessageSender implements Runnable {
     private String host;
     private int port;
 
-    public MessageSender(String newHost, int newPort) {
+    MessageSender(String newHost, int newPort) {
         host = newHost;
         port = newPort;
     }
