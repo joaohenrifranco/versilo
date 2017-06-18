@@ -49,7 +49,7 @@ public class HttpHandler {
     }
 
     public void sendBody(String body) {
-        streamWriter.print(body + "\t\n");
+        streamWriter.print(body);
         streamWriter.flush();
     }
 

@@ -9,10 +9,10 @@ public class Versilo {
         Thread messageSenderThread = new Thread(messageSender);
         messageSenderThread.run();
 
-//        //Creates and runs receiver thread
-//        MessageReceiver messageReceiver = new MessageReceiver(host, port);
-//        Thread messageReceiverThread = new Thread(messageReceiver);
-//        messageReceiverThread.run();
+        //Creates and runs receiver thread
+        MessageReceiver messageReceiver = new MessageReceiver(host, port);
+        Thread messageReceiverThread = new Thread(messageReceiver);
+        messageReceiverThread.run();
 
     }
 }
