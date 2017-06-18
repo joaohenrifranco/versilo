@@ -1,5 +1,9 @@
 package versilo;
 
+import versilo.http.HttpHandler;
+
+import java.io.IOException;
+
 public class MessageReceiver implements Runnable {
 
     private String host;
@@ -22,6 +26,23 @@ public class MessageReceiver implements Runnable {
             httpHandler.sendHost(host);
             httpHandler.sendContentType("application/x-www-form-urlencoded");
             httpHandler.sendBody("id=" + lastMessageId + "\t\n");
+
+            String responseCode = null;
+            try {
+                responseCode = httpHandler.getResponseCode(httpHandler.getResponse()[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Check for HTTP Bad Request
+            // TODO: Try-Catch for exiting method properly
+
+            if (responseCode.compareTo("200") != 0) {
+                return;
+            }
+
+
+
             httpHandler.closeSocket();
 
         }

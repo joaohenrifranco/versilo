@@ -3,6 +3,8 @@
 
 package versilo;
 
+import versilo.http.HttpHandler;
+
 import java.util.Scanner;
 
 public class MessageSender implements Runnable {
