@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class HttpHandler {
 
@@ -15,10 +16,8 @@ public class HttpHandler {
     private BufferedReader socketIn;
 
     public HttpHandler(String newHost, int newPort) {
-
         host = newHost;
         port = newPort;
-
     }
 
     public void newRequest() {
@@ -78,16 +77,19 @@ public class HttpHandler {
         StringBuilder stringBuilder = new StringBuilder();
         String bufferLine;
 
-        while ((bufferLine = socketIn.readLine()) != null) {
+        while ((bufferLine = socketIn.readLine()) != null)
             stringBuilder.append(bufferLine);
-        }
 
-        return stringBuilder.toString().split("\n");
+        return stringBuilder.toString().split("\\t?\\n");
     }
 
     public String getResponseCode(String responseLine) {
         String responseInfo[] = responseLine.split(" ");
         return responseInfo[1];
+    }
 
+    public String getResponseBody(String[] responseArray) {
+        return responseArray[Arrays.asList(responseArray).indexOf("")];
     }
 }
+
