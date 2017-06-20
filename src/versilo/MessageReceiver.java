@@ -1,9 +1,12 @@
 package versilo;
 
 import javafx.collections.ObservableList;
+import org.json.JSONObject;
 import versilo.http.HttpHandler;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 public class MessageReceiver implements Runnable {
 
@@ -12,11 +15,11 @@ public class MessageReceiver implements Runnable {
     private int lastMessageId;
     private ObservableList<String> messagesArray;
 
-    MessageReceiver(String newHost, int newPort, int newLastMessageId, ObservableList<String> newMessagesArray) {
-        host = newHost;
-        port = newPort;
-        messagesArray = newMessagesArray;
-        lastMessageId = newLastMessageId;
+    MessageReceiver(String host, int port, int lastMessageId, ObservableList<String> messagesArray) {
+        this.host = host;
+        this.port = port;
+        this.messagesArray = messagesArray;
+        this.lastMessageId = lastMessageId;
     }
 
     public void run() {
@@ -37,17 +40,23 @@ public class MessageReceiver implements Runnable {
             httpHandler.sendUserAgent("Versilo/1.0");
             httpHandler.sendHost(host);
             httpHandler.sendContentType("application/x-www-form-urlencoded");
-            httpHandler.sendBody("id=" + lastMessageId + "\r\n");
+            try {
+                httpHandler.sendBody(URLEncoder.encode("id=" + lastMessageId, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
 
-            String response = null;
+            String httpResponse = null;
 
             try {
-                response = httpHandler.getResponse();
+                httpResponse = httpHandler.getResponse();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            System.out.println(response);
+            String httpResponseBody = httpHandler.getBody(httpResponse);
+
+            JSONObject jsonObject = new JSONObject(httpResponseBody);
 
             httpHandler.closeSocket();
 

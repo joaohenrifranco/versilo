@@ -68,7 +68,6 @@ public class HttpHandler {
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
-            return;
         }
     }
 
@@ -82,6 +81,10 @@ public class HttpHandler {
         return stringBuilder.toString();
     }
 
+//TODO: implement this. Right now its a dummy method
 
+    public String getBody(String httpResponse) {
+        return httpResponse;
+    }
 }
 

@@ -5,6 +5,9 @@ package versilo;
 
 import versilo.http.HttpHandler;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class MessageSender {
 
     private String host;
@@ -26,7 +29,11 @@ public class MessageSender {
         httpHandler.sendUserAgent("Versilo/1.0");
         httpHandler.sendHost(host);
         httpHandler.sendContentType("application/x-www-form-urlencoded");
-        httpHandler.sendBody("msg=" + messageString + "&" + "sender=" + username);
+        try {
+            httpHandler.sendBody(URLEncoder.encode("msg=" + messageString + "&" + "sender=" + username, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         httpHandler.closeSocket();
     }
 }
