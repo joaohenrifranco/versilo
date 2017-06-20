@@ -62,8 +62,9 @@ public class MessageReceiver implements Runnable {
 
 
             JSONObject jsonObject = new JSONObject(httpResponseBody);
-             for(int i = 0 ; i < jsonObject.getArray("messages").length(); i++){
-                 messagesArray.add(jsonObject.getArray("messages")[i].getString("msg"));
+            JSONArray arrayJSON = jsonObject.getJSONArray("messages");
+             for(int i = 0 ; i < arrayJSON.length(); i++){
+                 messagesArray.add(arrayJSON.getJSONObject(i).getString("msg"));
              }
             System.out.print(httpResponseBody);
 
