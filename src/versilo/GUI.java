@@ -9,6 +9,15 @@ import javafx.stage.Stage;
 
 public class GUI extends Application implements Runnable {
 
+    private MessageReceiver messageReceiver;
+    private MessageSender messageSender;
+
+    private Thread messageSenderThread;
+    private Thread messageReceiverThread;
+
+    private String host;
+    private int port;
+
     Stage window;
     Scene sceneChat, sceneLogIn;
 
@@ -19,7 +28,7 @@ public class GUI extends Application implements Runnable {
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
-        window.setTitle("Seu Jorge");
+        window.setTitle("Versilo");
 
         //GridPane with 10px padding around edge
         GridPane grid = new GridPane();
@@ -58,6 +67,8 @@ public class GUI extends Application implements Runnable {
         Button okButton = new Button("Ok");
         GridPane.setConstraints(okButton, 0, 2, 1, 2);
         okButton.setOnAction(e -> window.setScene(sceneChat));
+        okButton.setOnAction(e -> host = ipInput.getText());
+        kButton.setOnAction(e -> port = ipInput.getText().); //TODO: convert to int
 
         //Messages view
         ListView<String> messageList = new ListView<String>();
