@@ -1,31 +1,33 @@
 package versilo;
 
+import javafx.collections.ObservableList;
 import versilo.http.HttpHandler;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public class MessageReceiver implements Runnable {
 
     private String host;
     private int port;
-    private int refreshRate = 2;
+    private int lastMessageId;
+    private ObservableList<String> messagesArray;
 
-    MessageReceiver(String newHost, int newPort) {
+    MessageReceiver(String newHost, int newPort, int newLastMessageId, ObservableList<String> newMessagesArray) {
         host = newHost;
         port = newPort;
+        messagesArray = newMessagesArray;
+        lastMessageId = newLastMessageId;
     }
 
     public void run() {
         HttpHandler httpHandler = new HttpHandler(host, port);
-        int lastMessageId = 0;
 
         while (true) {
 
-            // Waits refreshRate seconds to probe for new messages
+            // Waits x millis to probe for new messages
 
             try {
-                Thread.sleep(1000 * refreshRate);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -35,34 +37,20 @@ public class MessageReceiver implements Runnable {
             httpHandler.sendUserAgent("Versilo/1.0");
             httpHandler.sendHost(host);
             httpHandler.sendContentType("application/x-www-form-urlencoded");
-            httpHandler.sendBody("id=" + lastMessageId + "\t\n");
+            httpHandler.sendBody("id=" + lastMessageId + "\r\n");
 
-            String responseCode = null;
-            String[] responseArray = null;
+            String response = null;
 
             try {
-                responseArray = httpHandler.getResponse();
-                System.out.println(Arrays.toString(responseArray));
+                response = httpHandler.getResponse();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            responseCode = httpHandler.getResponseCode(responseArray[0]);
-
-            // Check for HTTP Bad Request
-            // TODO: Try-Catch for exiting method properly
-
-            if (responseCode.compareTo("200") != 0) {
-                System.out.println("Not 200");
-
-            }
-
-            String responseBody = httpHandler.getResponseBody(responseArray);
-
-            //TODO: responseBody is a JSon. Parse it.
-
+            System.out.println(response);
 
             httpHandler.closeSocket();
+
         }
     }
 }

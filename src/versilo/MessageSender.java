@@ -5,37 +5,28 @@ package versilo;
 
 import versilo.http.HttpHandler;
 
-import java.util.Scanner;
-
-public class MessageSender implements Runnable {
+public class MessageSender {
 
     private String host;
     private int port;
+    private String username;
 
-    MessageSender(String newHost, int newPort) {
-        host = newHost;
-        port = newPort;
+    MessageSender(String host, int port, String username) {
+        this.host = host;
+        this.port = port;
+        this.username = username;
     }
 
-
-    public void run() {
+    public void sendMessage(String messageString) {
 
         HttpHandler httpHandler = new HttpHandler(host, port);
 
-        while (true) {
-            System.out.println("Enter message:");
-
-            // Reads from keyboard to string
-            Scanner keyboardScanner = new Scanner(System.in);
-            String messageString = keyboardScanner.nextLine();
-
-            httpHandler.newRequest();
-            httpHandler.sendPost("/sendMessage");
-            httpHandler.sendUserAgent("Versilo/1.0");
-            httpHandler.sendHost(host);
-            httpHandler.sendContentType("application/x-www-form-urlencoded");
-            httpHandler.sendBody("msg=\"" + messageString + "\"");
-            httpHandler.closeSocket();
-        }
+        httpHandler.newRequest();
+        httpHandler.sendPost("/sendMessage.lua");
+        httpHandler.sendUserAgent("Versilo/1.0");
+        httpHandler.sendHost(host);
+        httpHandler.sendContentType("application/x-www-form-urlencoded");
+        httpHandler.sendBody("msg=" + messageString + "&" + "sender=" + username);
+        httpHandler.closeSocket();
     }
 }
