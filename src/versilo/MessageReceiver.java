@@ -31,7 +31,7 @@ public class MessageReceiver implements Runnable {
             }
 
             httpHandler.newRequest();
-            httpHandler.sendPost("/getMessages");
+            httpHandler.sendPost("/getMessages.lua");
             httpHandler.sendUserAgent("Versilo/1.0");
             httpHandler.sendHost(host);
             httpHandler.sendContentType("application/x-www-form-urlencoded");

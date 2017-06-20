@@ -44,23 +44,23 @@ public class HttpHandler {
     }
 
     public void sendPost(String path) {
-        socketOut.print("POST " + path + " HTTP/1.0\t\n");
+        socketOut.print("POST " + path + " HTTP/1.0\r\n");
     }
 
     public void sendUserAgent(String userAgent) {
-        socketOut.print("User-Agent: " + userAgent + "\t\n");
+        socketOut.print("User-Agent: " + userAgent + "\r\n");
     }
 
     public void sendHost(String requestHost) {
-        socketOut.print("Host: " + requestHost + "\t\n");
+        socketOut.print("Host: " + requestHost + "\r\n");
     }
 
     public void sendContentType(String contentType) {
-        socketOut.print("Content-Type: " + contentType + "\t\n");
+        socketOut.print("Content-Type: " + contentType + "\r\n");
     }
 
     public void sendBody(String body) {
-        socketOut.print("\t\n" + body);
+        socketOut.print("\r\n" + body);
         socketOut.flush();
     }
 
@@ -80,7 +80,7 @@ public class HttpHandler {
         while ((bufferLine = socketIn.readLine()) != null)
             stringBuilder.append(bufferLine);
 
-        return stringBuilder.toString().split("\\t?\\n");
+        return stringBuilder.toString().split("\\r?\\n");
     }
 
     public String getResponseCode(String responseLine) {

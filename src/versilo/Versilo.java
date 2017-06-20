@@ -18,5 +18,10 @@ public class Versilo {
         MessageSender messageSender = new MessageSender(host, port);
         Thread messageSenderThread = new Thread(messageSender);
         messageSenderThread.start();
+
+        //Creates and runs GUI thread
+        GUI chatGUI = new GUI();
+        Thread guiThread = new Thread(chatGUI);
+        guiThread.start();
     }
 }
