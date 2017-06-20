@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.collections.*;
 
 public class GUI extends Application implements Runnable {
 
@@ -17,6 +18,9 @@ public class GUI extends Application implements Runnable {
 
     private String host;
     private int port;
+
+    //TODO passar messagesArray para o receiver
+    ObservableList<String> messagesArray = FXCollections.observableArrayList();
 
     Stage window;
     Scene sceneChat, sceneLogIn;
@@ -71,8 +75,7 @@ public class GUI extends Application implements Runnable {
         kButton.setOnAction(e -> port = ipInput.getText().); //TODO: convert to int
 
         //Messages view
-        ListView<String> messageList = new ListView<String>();
-        messageList.getItems().addAll("Olar", "Tudo bem?", "Sim");
+        ListView<String> messageList = new ListView<String>(messagesArray);
         messageList.setPrefWidth(400);
         messageList.setPrefHeight(400);
         GridPane.setConstraints(messageList, 0, 0);
