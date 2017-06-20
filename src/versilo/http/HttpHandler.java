@@ -72,13 +72,14 @@ public class HttpHandler {
     }
 
     public String getResponse() throws IOException {
-        StringBuilder stringBuilder = new StringBuilder();
-        String bufferString;
+        StringBuilder builder = new StringBuilder();
+        String aux;
 
-        while ((bufferString = socketIn.readLine()) != null)
-            stringBuilder.append(bufferString);
+        while ((aux = socketIn.readLine()) != null) {
+            builder.append(aux);
+        }
 
-        return stringBuilder.toString();
+        return builder.toString();
     }
 
 //TODO: implement this. Right now its a dummy method

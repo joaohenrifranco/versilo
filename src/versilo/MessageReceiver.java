@@ -1,8 +1,11 @@
 package versilo;
 
 import javafx.collections.ObservableList;
+<<<<<<< HEAD
 import javafx.scene.control.*;
 import org.json.JSONObject;
+=======
+>>>>>>> fc5a597da913c1281b864f1aef07130737c5f511
 import versilo.http.HttpHandler;
 
 import java.io.IOException;
@@ -31,7 +34,7 @@ public class MessageReceiver implements Runnable {
             // Waits x millis to probe for new messages
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -57,10 +60,14 @@ public class MessageReceiver implements Runnable {
 
             String httpResponseBody = httpHandler.getBody(httpResponse);
 
+
             JSONObject jsonObject = new JSONObject(httpResponseBody);
              for(int i = 0 ; i < jsonObject.getArray("messages").length(); i++){
                  messagesArray.add(jsonObject.getArray("messages")[i].getString("msg"));
              }
+            System.out.print(httpResponseBody);
+
+            //JSONObject jsonObject = new JSONObject(httpResponseBody);
 
             httpHandler.closeSocket();
 
