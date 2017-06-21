@@ -7,6 +7,7 @@ import versilo.http.HttpHandler;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 public class MessageReceiver implements Runnable {
@@ -31,7 +32,7 @@ public class MessageReceiver implements Runnable {
             // Waits x millis to probe for new messages
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -61,7 +62,13 @@ public class MessageReceiver implements Runnable {
             JSONArray messagesJSONArray = (JSONArray) jsonObject.get("messages");
             for (int i = 0; i < messagesJSONArray.length(); i++) {
                 JSONObject message = messagesJSONArray.getJSONObject(i);
-                messagesArray.add(message.getString("sender") + ": " + message.getString("msg"));
+                try {
+                    messagesArray.add(message.getString("sender") + ": " +
+                            URLDecoder.decode(message.getString("msg"), "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                lastMessageId = message.getInt("id") + 1;
             }
             httpHandler.closeSocket();
 
