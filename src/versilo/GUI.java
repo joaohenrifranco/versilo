@@ -54,7 +54,7 @@ public class GUI extends Application implements Runnable {
 
         // IP text field and label
         Label ipLabel = new Label("Server IP");
-        TextField ipInput = new TextField("127.0.0.1");
+        TextField ipInput = new TextField("vbustamante.xyz");
         GridPane.setConstraints(ipLabel, 0, 1);
         GridPane.setConstraints(ipInput, 1, 1);
 

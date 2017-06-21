@@ -1,11 +1,8 @@
 package versilo;
 
 import javafx.collections.ObservableList;
-<<<<<<< HEAD
-import javafx.scene.control.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
-=======
->>>>>>> fc5a597da913c1281b864f1aef07130737c5f511
 import versilo.http.HttpHandler;
 
 import java.io.IOException;
@@ -60,16 +57,12 @@ public class MessageReceiver implements Runnable {
 
             String httpResponseBody = httpHandler.getBody(httpResponse);
 
-
             JSONObject jsonObject = new JSONObject(httpResponseBody);
-            JSONArray arrayJSON = jsonObject.getJSONArray("messages");
-             for(int i = 0 ; i < arrayJSON.length(); i++){
-                 messagesArray.add(arrayJSON.getJSONObject(i).getString("msg"));
-             }
-            System.out.print(httpResponseBody);
-
-            //JSONObject jsonObject = new JSONObject(httpResponseBody);
-
+            JSONArray messagesJSONArray = (JSONArray) jsonObject.get("messages");
+            for (int i = 0; i < messagesJSONArray.length(); i++) {
+                JSONObject message = messagesJSONArray.getJSONObject(i);
+                messagesArray.add(message.getString("sender") + ": " + message.getString("msg"));
+            }
             httpHandler.closeSocket();
 
         }

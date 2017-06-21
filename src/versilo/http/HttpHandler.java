@@ -76,16 +76,15 @@ public class HttpHandler {
         String aux;
 
         while ((aux = socketIn.readLine()) != null) {
-            builder.append(aux);
+            builder.append(aux + "\r\n");
         }
 
         return builder.toString();
     }
 
-//TODO: implement this. Right now its a dummy method
-
     public String getBody(String httpResponse) {
-        return httpResponse;
+        return httpResponse.substring(httpResponse.indexOf("\r\n\r\n") + 4, httpResponse.length());
     }
+
 }
 
