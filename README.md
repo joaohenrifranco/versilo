@@ -1,5 +1,7 @@
 # Versilo
-This client application, named Versilo was developed using Java (JDK 1.8). Among its features are having configurable IP and server port, making it possible to choose a nickname and a graphical user interface. The program was modularized into five classes: Versilo.java, GUI.java, MessageReceiver.java, MessageSender.java and HttpHandler.java. It as developed as a college project.
+This client application, named Versilo was developed using Java (JDK 1.8). Among its features are having configurable IP and server port, making it possible to choose a nickname and a graphical user interface. The program was modularized into five classes: Versilo.java, GUI.java, MessageReceiver.java, MessageSender.java and HttpHandler.java. 
+
+It as developed as a college project, along with [Jorge, a lua web server](https://github.com/vbustamante/jorge).
 
 ### Versilo.java: 
 Contains main(), responsible for calling a thread with the graphical interface, implemented in the class described below.
